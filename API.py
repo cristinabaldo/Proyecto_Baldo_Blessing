@@ -33,15 +33,21 @@ def obtener_obras():
         obras = []
         for id in data:
             obra = obtener_obras_id(id)
-            obras.append(obra)
+            if obra is not None:
+                obras.append(obra)
 
         return obras
     return []
 
 def obtener_obras_id(id):
+        #Obtiene los datos de una obra por su ID
         api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}"
         response = requests.get(api_url)
+        
+        #Si la respuesta es exitosa, devuelve el objeto obra
         if response.status_code == 200:
             obra_data = response.json()
             obra = Obra(obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], obra_data["objectName"], obra_data["objectDate"], obra_data["primaryImageSmall"])
+            return obra
+        return None
             
