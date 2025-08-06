@@ -1,7 +1,9 @@
 
+from API import obtener_departamentos, obtener_obras
 
 
 def main():
+    departamentos = obtener_departamentos()
     
     print("Bienvenidos")
 
@@ -25,3 +27,6 @@ def main():
             break
         else:
             print("Opcion no valida, intente de nuevo")
+
+
+main()
