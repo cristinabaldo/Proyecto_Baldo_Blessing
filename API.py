@@ -13,6 +13,7 @@ def obtener_departamentos():
     if response.status_code == 200:
         data = response.json()["departments"]
 
+        #crea y guarda los objetos
         departamentos = []
         for departamento in data:
             departamentos.append(Departamento(departamento["departmentId"], departamento["displayName"]))
