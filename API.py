@@ -19,3 +19,21 @@ def obtener_departamentos():
             departamentos.append(Departamento(departamento["departmentId"], departamento["displayName"]))
 
         return departamentos
+    
+def obtener_obras():
+    #Obtiene la lista de obras del Met Museum
+    api_url = "https://collectionapi.metmuseum.org/public/collection/v1/objects"
+    response = requests.get(api_url)
+
+    #Si la respuesta es exitosa, devuelve el listado de id de obras
+    if response.status_code == 200:
+        data = response.json()["objectIDs"]
+        
+        #crea y guarda los objetos
+        obras = []
+        for id in data:
+            api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}"
+            response = requests.get(api_url)
+            if response.status_code == 200:
+                obra_data = response.json()
+                obras.append()
