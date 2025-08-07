@@ -36,7 +36,7 @@ def ver_obras_por_departamento(departamentos, obras):
         print(f"ID: {departamento.id} - Departamento: {departamento.nombre}")
 
     id_departamento = input("Ingrese el ID del departamento: ") 
-    while not id_departamento.numeric():
+    while not id_departamento.isnumeric():
         print("ID invalido, intente de nuevo")
         id_departamento = input("Ingrese el ID del departamento: ")
 
@@ -48,10 +48,18 @@ def ver_obras_por_departamento(departamentos, obras):
             pass
 
 def ver_obras_por_nacionalidad(obras):
-    pass
+    nacionalidades = []
+
+    for i, nacionalidad in enumerate(nacionalidades):
+        print(f"{i+1}. {nacionalidad}.")
+
+    seleccion = input("Ingrese el numero de la nacionalidad: ") 
+    while not seleccion.isnumeric() or not int(seleccion) in range(1, len(nacionalidades)+1):
+        print("numero invalido, intente de nuevo")
+        seleccion = input("Ingrese el numero de la nacionalidad: ") 
 
 def ver_obras_por_nombre_autor(obras):
-    pass 
+    pass
 
 
 
