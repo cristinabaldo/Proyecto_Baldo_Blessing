@@ -40,14 +40,33 @@ def obtener_obras():
     return []
 
 def obtener_obras_id(id):
-        #Obtiene los datos de una obra por su ID
-        api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}"
-        response = requests.get(api_url)
+    #Obtiene los datos de una obra por su ID
+    api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}"
+    response = requests.get(api_url)
+    
+    #Si la respuesta es exitosa, devuelve el objeto obra
+    if response.status_code == 200:
+        obra_data = response.json()
+        obra = Obra(obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], obra_data["objectName"], obra_data["objectDate"], obra_data["primaryImageSmall"])
+        return obra
+    return None
+
+
+def obtener_obras_por_artista(nombre):
+    #Obtiene las obras de un artista por su nombre
+    api_url = "https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q=" + nombre
+    response = requests.get(api_url)
+
+    #Si la respuesta es exitosa, devuelve el listado de id de obras
+    if response.status_code == 200:
+        data = response.json()["objectIDs"]
         
-        #Si la respuesta es exitosa, devuelve el objeto obra
-        if response.status_code == 200:
-            obra_data = response.json()
-            obra = Obra(obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], obra_data["objectName"], obra_data["objectDate"], obra_data["primaryImageSmall"])
-            return obra
-        return None
+        #crea y guarda los objetos
+        obras = []
+        for id in data:
+            obra = obtener_obras_id(id)
+            if obra is not None:
+                obras.append(obra)
+
+        return obras
             
