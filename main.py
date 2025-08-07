@@ -59,7 +59,15 @@ def ver_obras_por_nacionalidad(obras):
         seleccion = input("Ingrese el numero de la nacionalidad: ") 
 
 def ver_obras_por_nombre_autor(obras):
-    pass
+    
+    nombre = input("Ingrese el nombre del autor: ")
+    while not nombre:
+        print("Nombre invalido, intente de nuevo")
+        nombre = input("Ingrese el nombre del autor: ")
+
+    
+
+    
 
 
 
