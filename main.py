@@ -65,6 +65,8 @@ def ver_obras_por_nombre_autor(obras):
         print("Nombre invalido, intente de nuevo")
         nombre = input("Ingrese el nombre del autor: ")
 
+    print(f"Buscando obras de {nombre}...")
+
     data = obtener_obras_por_artista(nombre, obras)
 
 

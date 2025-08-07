@@ -1,5 +1,6 @@
 class Obra():
-    def __init__(self, titulo, nombre_artista, nacionalidad_artista, fecha_nacimiento, fecha_muerte, tipo, anio_creacion, imagen_url):
+    def __init__(self, id, titulo, nombre_artista, nacionalidad_artista, fecha_nacimiento, fecha_muerte, tipo, anio_creacion, imagen_url):
+        self.id = id
         self.titulo = titulo
         self.nombre_artista = nombre_artista
         self.nacionalidad_artista = nacionalidad_artista

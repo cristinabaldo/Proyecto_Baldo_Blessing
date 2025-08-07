@@ -47,7 +47,7 @@ def obtener_obras_id(id):
     #Si la respuesta es exitosa, devuelve el objeto obra
     if response.status_code == 200:
         obra_data = response.json()
-        obra = Obra(obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], obra_data["objectName"], obra_data["objectDate"], obra_data["primaryImageSmall"])
+        obra = Obra(obra_data["objectID"], obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], obra_data["objectName"], obra_data["objectDate"], obra_data["primaryImageSmall"])
         return obra
     return None
 
