@@ -4,7 +4,7 @@ from API import obtener_departamentos, obtener_obras
 
 def main():
     departamentos = obtener_departamentos()
-    
+    obras = []
     print("Bienvenidos")
 
     while True:
@@ -18,15 +18,41 @@ def main():
 
         if opcion == "1":
             print("Ver lista de obras por Departamento")
+            ver_obras_por_departamento(departamentos, obras)
         elif opcion == "2":
             print("Ver lista de obras por Nacionalidad del autor")
+            ver_obras_por_nacionalidad(obras)
         elif opcion == "3":
             print("Ver lista de obras por nombre del autor")
+            ver_obras_por_nombre_autor(obras)
         elif opcion == "4":
             print("Salir")
             break
         else:
             print("Opcion no valida, intente de nuevo")
+
+def ver_obras_por_departamento(departamentos, obras):
+    for departamento in departamentos:
+        print(f"ID: {departamento.id} - Departamento: {departamento.nombre}")
+
+    id_departamento = input("Ingrese el ID del departamento: ") 
+    while not id_departamento.numeric():
+        print("ID invalido, intente de nuevo")
+        id_departamento = input("Ingrese el ID del departamento: ")
+
+
+    id_departamento = int(id_departamento)
+
+    for obra in obras:
+        if obra.tipo == id_departamento:
+            pass
+
+def ver_obras_por_nacionalidad(obras):
+    pass
+
+def ver_obras_por_nombre_autor(obras):
+    pass 
+
 
 
 main()
