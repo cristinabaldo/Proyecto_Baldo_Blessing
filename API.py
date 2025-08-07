@@ -53,8 +53,12 @@ def obtener_obras_id(id):
 
 
 def obtener_obras_por_artista(nombre):
+
+    nombre_sin_espacio = nombre.replace(" ", "%20")
+    nombre_en_minusculas = nombre_sin_espacio.lower()
+
     #Obtiene las obras de un artista por su nombre
-    api_url = "https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q=" + nombre
+    api_url = "https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q=" + nombre_en_minusculas
     response = requests.get(api_url)
 
     #Si la respuesta es exitosa, devuelve el listado de id de obras
