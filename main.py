@@ -1,5 +1,5 @@
 
-from API import obtener_departamentos, obtener_obras
+from API import obtener_departamentos, obtener_obras, obtener_obras_por_artista
 
 
 def main():
@@ -65,9 +65,25 @@ def ver_obras_por_nombre_autor(obras):
         print("Nombre invalido, intente de nuevo")
         nombre = input("Ingrese el nombre del autor: ")
 
+    data = obtener_obras_por_artista(nombre, obras)
+
+
+    contador = 1
+    for id in data:
+        for obra in obras:
+            if int(obra.id) == int(id):
+                print(f"{contador}.")
+                obra.show()
+                contador += 1
+
+    respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+    while respuesta not in ["1", "2"]:
+        print("Opcion invalida, intente de nuevo")
+        respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
     
 
-    
+    if respuesta == "1":
+        pass
 
 
 

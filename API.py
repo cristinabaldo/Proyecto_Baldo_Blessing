@@ -81,4 +81,6 @@ def obtener_obras_por_artista(nombre, obras):
                 obra = obtener_obras_id(id)
                 if obra is not None:
                     obras.append(obra)
+
+    return data
             
