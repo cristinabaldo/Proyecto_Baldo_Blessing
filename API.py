@@ -52,7 +52,7 @@ def obtener_obras_id(id):
     return None
 
 
-def obtener_obras_por_artista(nombre):
+def obtener_obras_por_artista(nombre, obras):
 
     nombre_sin_espacio = nombre.replace(" ", "%20")
     nombre_en_minusculas = nombre_sin_espacio.lower()
@@ -65,12 +65,20 @@ def obtener_obras_por_artista(nombre):
     if response.status_code == 200:
         data = response.json()["objectIDs"]
         
-        #crea y guarda los objetos
-        obras = []
-        for id in data:
-            obra = obtener_obras_id(id)
-            if obra is not None:
-                obras.append(obra)
 
-        return obras
+        #crea y guarda los objetos
+        for id in data:
+
+            #verifica si la obra ya existe en la lista
+            existe = False
+            for obra in obras:
+                if obra.id == id:
+                    existe = True
+                    break
+            
+            #si no existe, obtiene la obra por su id y la agrega a la lista
+            if existe == False:
+                obra = obtener_obras_id(id)
+                if obra is not None:
+                    obras.append(obra)
             
