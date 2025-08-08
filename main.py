@@ -1,5 +1,5 @@
 
-from API import obtener_departamentos, obtener_obras, obtener_obras_por_artista
+from API import obtener_departamentos, obtener_obras, obtener_obras_por_artista, obtener_obras_por_departamento
 
 
 def main():
@@ -43,24 +43,29 @@ def ver_obras_por_departamento(departamentos, obras):
 
     id_departamento = int(id_departamento)
 
-
+    var = obtener_obras_por_departamento(id_departamento, obras)
     
+    if var == []:
+        print("No sexisten obras para este departamento o el ID es incorrecto")
+    else:
+        print(f"Buscando obras...")
 
-    contador = 1
-    for obra in obras:
-        if obra.tipo == id_departamento:
-            print(contador)
-            obra.show()
-            contador += 1
+        contador = 1
+        for obra in obras:
+            for id in var:
+                if obra.id == id:
+                    print(f"{contador}.")
+                    obra.show()
+                    contador += 1
 
-    respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
-    while respuesta not in ["1", "2"]:
-        print("Opcion invalida, intente de nuevo")
         respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
-    
+        while respuesta not in ["1", "2"]:
+            print("Opcion invalida, intente de nuevo")
+            respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+        
 
-    if respuesta == "1":
-        pass
+        if respuesta == "1":
+            pass
 
 
 

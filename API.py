@@ -28,20 +28,23 @@ def obtener_obras_por_departamento(id_departamento, obras):
     #Si la respuesta es exitosa, devuelve el listado de id de obras
     if response.status_code == 200:
         data = response.json()["objectIDs"]
-        for id in data:
+        if data is None:
+            return []
+        else:
+            for id in data:
 
-            #verifica si la obra ya existe en la lista
-            existe = False
-            for obra in obras:
-                if obra.id == id:
-                    existe = True
-                    break
-            
-            #si no existe, obtiene la obra por su id y la agrega a la lista
-            if existe == False:
-                obra = obtener_obras_id(id)
-                if obra is not None:
-                    obras.append(obra)
+                #verifica si la obra ya existe en la lista
+                existe = False
+                for obra in obras:
+                    if obra.id == id:
+                        existe = True
+                        break
+                
+                #si no existe, obtiene la obra por su id y la agrega a la lista
+                if existe == False:
+                    obra = obtener_obras_id(id)
+                    if obra is not None:
+                        obras.append(obra)
 
     return data
 
@@ -72,7 +75,7 @@ def obtener_obras_id(id):
     #Si la respuesta es exitosa, devuelve el objeto obra
     if response.status_code == 200:
         obra_data = response.json()
-        obra = Obra(obra_data["objectID"], obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], obra_data["objectName"], obra_data["objectDate"], obra_data["primaryImageSmall"])
+        obra = Obra(obra_data["objectID"], obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], obra_data["department"], obra_data["objectDate"], obra_data["primaryImageSmall"])
         return obra
     return None
 
