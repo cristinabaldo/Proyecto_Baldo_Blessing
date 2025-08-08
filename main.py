@@ -1,11 +1,13 @@
 
-from API import obtener_departamentos, obtener_obras, obtener_obras_por_artista, obtener_obras_por_departamento
+from API import obtener_departamentos, obtener_obras, obtener_obras_por_artista, obtener_obras_por_departamento, obtener_nacionalidades
 import requests
 from PIL import Image
 
 def main():
     departamentos = obtener_departamentos()
     obras = []
+    nacionalidades = []
+    obtener_nacionalidades(nacionalidades)
     print("Bienvenidos")
 
     while True:
@@ -22,7 +24,7 @@ def main():
             ver_obras_por_departamento(departamentos, obras)
         elif opcion == "2":
             print("Ver lista de obras por Nacionalidad del autor")
-            ver_obras_por_nacionalidad(obras)
+            ver_obras_por_nacionalidad(nacionalidades, obras)
         elif opcion == "3":
             print("Ver lista de obras por nombre del autor")
             ver_obras_por_nombre_autor(obras)
@@ -81,10 +83,7 @@ def ver_obras_por_departamento(departamentos, obras):
                             return
                         contador += 1
 
-
-
-def ver_obras_por_nacionalidad(obras):
-    nacionalidades = []
+def ver_obras_por_nacionalidad(nacionalidades, obras):
 
     for i, nacionalidad in enumerate(nacionalidades):
         print(f"{i+1}. {nacionalidad}.")
@@ -139,7 +138,6 @@ def ver_obras_por_nombre_autor(obras):
                             return
                         contador += 1
 
-
 def mostrar_imagen(obra):
 
     # URL de la API
@@ -156,7 +154,6 @@ def mostrar_imagen(obra):
         nombre_archivo_destino=guardar_imagen_desde_url(api_url,nombre_archivo_destino)
         img = Image.open(nombre_archivo_destino)
         img.show()
-
 
 def guardar_imagen_desde_url(url, nombre_archivo):
     """

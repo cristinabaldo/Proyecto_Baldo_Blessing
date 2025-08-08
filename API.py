@@ -2,7 +2,14 @@ import requests
 import json
 from Departamento import Departamento
 from Obra import Obra
+import csv
 
+def obtener_nacionalidades(nacionalidades):
+
+    with open("CH_Nationality_List_20171130_v1.csv", newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            nacionalidades.append(row[0])
 
 def obtener_departamentos():
     #Obtiene la lista de departamentos del Met Museum
