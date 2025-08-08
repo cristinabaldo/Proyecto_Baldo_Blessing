@@ -1,5 +1,5 @@
 
-from API import obtener_departamentos, obtener_obras, obtener_obras_por_artista, obtener_obras_por_departamento, obtener_nacionalidades
+from API import obtener_departamentos, obtener_obras, obtener_obras_por_artista, obtener_obras_por_departamento, obtener_nacionalidades, obtener_obras_por_nacionalidad
 import requests
 from PIL import Image
 
@@ -91,7 +91,45 @@ def ver_obras_por_nacionalidad(nacionalidades, obras):
     seleccion = input("Ingrese el numero de la nacionalidad: ") 
     while not seleccion.isnumeric() or not int(seleccion) in range(1, len(nacionalidades)+1):
         print("numero invalido, intente de nuevo")
-        seleccion = input("Ingrese el numero de la nacionalidad: ") 
+        seleccion = input("Ingrese el numero de la nacionalidad: ")
+
+    nacionalidad = nacionalidades[int(seleccion)-1]
+    print(f"Buscando obras de nacionalidad {nacionalidad}...")
+    data = obtener_obras_por_nacionalidad(nacionalidad, obras)
+
+    if data == []:
+        print("No sexisten obras con artistas de esta nacionalidad")
+    else:
+
+        contador = 1
+        for obra in obras:
+            for id in data:
+                if obra.id == id:
+                    print(f"{contador}.")
+                    obra.show()
+                    contador += 1
+
+        respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+        while respuesta not in ["1", "2"]:
+            print("Opcion invalida, intente de nuevo")
+            respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+        
+        
+
+        if respuesta == "1":
+            respuesta = input("Ingrese el numero de la obra: ")
+            while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
+                print("Numero invalido, intente de nuevo")
+                respuesta = input("Ingrese el numero de la obra: ")
+                
+            contador = 1
+            for obra in obras:
+                for id in data:
+                    if obra.id == id:
+                        if contador == int(respuesta):
+                            mostrar_imagen(obra)
+                            return
+                        contador += 1
 
 def ver_obras_por_nombre_autor(obras):
     
