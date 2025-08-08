@@ -93,7 +93,7 @@ def obtener_obras_id(id, departamentos):
                 departamento_objeto = departamento
                 break
 
-        obra = Obra(obra_data["objectID"], obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], departamento_objeto, obra_data["objectDate"], obra_data["primaryImageSmall"])
+        obra = Obra(obra_data["objectID"], obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], departamento_objeto, obra_data["classification"], obra_data["objectDate"], obra_data["primaryImageSmall"])
         return obra
     return None
 

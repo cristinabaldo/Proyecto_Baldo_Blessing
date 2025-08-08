@@ -66,27 +66,33 @@ def ver_obras_por_departamento(departamentos, obras):
                     obra.show()
                     contador += 1
 
-        respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+        respuesta = input("Desea ver el detalle de alguna obra? 1. Si, 2. No: ")
         while respuesta not in ["1", "2"]:
             print("Opcion invalida, intente de nuevo")
-            respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
-        
-        
-        #si el usuario quiere ver la imagen de una obra, pide el numero de la obra y la muestra
-        if respuesta == "1":
-            respuesta = input("Ingrese el numero de la obra: ")
-            while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
-                print("Numero invalido, intente de nuevo")
-                respuesta = input("Ingrese el numero de la obra: ")
+            respuesta = input("Desea ver el detalle de alguna obra? 1. Si, 2. No: ")
 
-            contador = 1
+        if respuesta == "1":
+            respuesta = input("Ingrese el id de la obra: ")
+            while not respuesta.isnumeric():
+                print("Numero invalido, intente de nuevo")
+                respuesta = input("Ingrese el id de la obra: ")
+
+            obra_seleccionada = None
             for obra in obras:
-                for id in var:
-                    if obra.id == id:
-                        if contador == int(respuesta):
-                            mostrar_imagen(obra)
-                            return
-                        contador += 1
+                if obra.id == int(respuesta):
+                    obra.show_detalles()
+                    obra_seleccionada = obra
+                    break
+
+            respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+            while respuesta not in ["1", "2"]:
+                print("Opcion invalida, intente de nuevo")
+                respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+            
+            
+            #si el usuario quiere ver la imagen de una obra, pide el numero de la obra y la muestra
+            if respuesta == "1":                    
+                mostrar_imagen(obra_seleccionada)
 
 #Funcion para ver obras por nacionalidad: Muestra las nacionalidades y permite al usuario seleccionar una para ver las obras
 def ver_obras_por_nacionalidad(nacionalidades, obras, departamentos):
@@ -118,27 +124,33 @@ def ver_obras_por_nacionalidad(nacionalidades, obras, departamentos):
                     obra.show()
                     contador += 1
 
-        respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+        respuesta = input("Desea ver el detalle de alguna obra? 1. Si, 2. No: ")
         while respuesta not in ["1", "2"]:
             print("Opcion invalida, intente de nuevo")
-            respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
-        
-        
-        #si el usuario quiere ver la imagen de una obra, pide el numero de la obra y la muestra
+            respuesta = input("Desea ver el detalle de alguna obra? 1. Si, 2. No: ")
+
         if respuesta == "1":
-            respuesta = input("Ingrese el numero de la obra: ")
-            while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
+            respuesta = input("Ingrese el id de la obra: ")
+            while not respuesta.isnumeric():
                 print("Numero invalido, intente de nuevo")
-                respuesta = input("Ingrese el numero de la obra: ")
-                
-            contador = 1
+                respuesta = input("Ingrese el id de la obra: ")
+
+            obra_seleccionada = None
             for obra in obras:
-                for id in data:
-                    if obra.id == id:
-                        if contador == int(respuesta):
-                            mostrar_imagen(obra)
-                            return
-                        contador += 1
+                if obra.id == int(respuesta):
+                    obra.show_detalles()
+                    obra_seleccionada = obra
+                    break
+
+            respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+            while respuesta not in ["1", "2"]:
+                print("Opcion invalida, intente de nuevo")
+                respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+            
+            
+            #si el usuario quiere ver la imagen de una obra, pide el numero de la obra y la muestra
+            if respuesta == "1":                    
+                mostrar_imagen(obra_seleccionada)
 
 #Funcion para ver obras por nombre del autor: Permite al usuario ingresar el nombre de un autor y muestra sus obras
 def ver_obras_por_nombre_autor(obras, departamentos):
@@ -165,27 +177,33 @@ def ver_obras_por_nombre_autor(obras, departamentos):
                     obra.show()
                     contador += 1
 
-        respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+        respuesta = input("Desea ver el detalle de alguna obra? 1. Si, 2. No: ")
         while respuesta not in ["1", "2"]:
             print("Opcion invalida, intente de nuevo")
-            respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
-        
-        
-        #si el usuario quiere ver la imagen de una obra, pide el numero de la obra y la muestra
+            respuesta = input("Desea ver el detalle de alguna obra? 1. Si, 2. No: ")
+
         if respuesta == "1":
-            respuesta = input("Ingrese el numero de la obra: ")
-            while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
+            respuesta = input("Ingrese el id de la obra: ")
+            while not respuesta.isnumeric():
                 print("Numero invalido, intente de nuevo")
-                respuesta = input("Ingrese el numero de la obra: ")
-                
-            contador = 1
+                respuesta = input("Ingrese el id de la obra: ")
+
+            obra_seleccionada = None
             for obra in obras:
-                for id in data:
-                    if obra.id == id:
-                        if contador == int(respuesta):
-                            mostrar_imagen(obra)
-                            return
-                        contador += 1
+                if obra.id == int(respuesta):
+                    obra.show_detalles()
+                    obra_seleccionada = obra
+                    break
+
+            respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+            while respuesta not in ["1", "2"]:
+                print("Opcion invalida, intente de nuevo")
+                respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+            
+            
+            #si el usuario quiere ver la imagen de una obra, pide el numero de la obra y la muestra
+            if respuesta == "1":                    
+                mostrar_imagen(obra_seleccionada)
 
 #Abre la imagen de una obra y la muestra
 def mostrar_imagen(obra):
