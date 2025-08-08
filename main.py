@@ -1,6 +1,7 @@
 
 from API import obtener_departamentos, obtener_obras, obtener_obras_por_artista, obtener_obras_por_departamento
-
+import requests
+from PIL import Image
 
 def main():
     departamentos = obtener_departamentos()
@@ -44,11 +45,11 @@ def ver_obras_por_departamento(departamentos, obras):
     id_departamento = int(id_departamento)
 
     var = obtener_obras_por_departamento(id_departamento, obras)
+    print(f"Buscando obras...")
     
     if var == []:
         print("No sexisten obras para este departamento o el ID es incorrecto")
     else:
-        print(f"Buscando obras...")
 
         contador = 1
         for obra in obras:
@@ -63,9 +64,22 @@ def ver_obras_por_departamento(departamentos, obras):
             print("Opcion invalida, intente de nuevo")
             respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
         
+        
 
         if respuesta == "1":
-            pass
+            respuesta = input("Ingrese el numero de la obra: ")
+            while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
+                print("Numero invalido, intente de nuevo")
+                respuesta = input("Ingrese el numero de la obra: ")
+                
+            contador = 1
+            for obra in obras:
+                for id in var:
+                    if obra.id == id:
+                        if contador == int(respuesta):
+                            mostrar_imagen(obra)
+                            return
+                        contador += 1
 
 
 
@@ -110,5 +124,55 @@ def ver_obras_por_nombre_autor(obras):
         pass
 
 
+def mostrar_imagen(obra):
+
+    # URL de la API
+    api_url = obra.imagen_url
+
+    if api_url is None or api_url == "":
+        print("No hay imagen disponible para esta obra.")
+        
+    else:
+        # Nombre deseado para el archivo (sin extensión, ya que se determinará automáticamente)
+        nombre_archivo_destino = obra.id
+        
+        # Llamar a la función para guardar la imagen
+        nombre_archivo_destino=guardar_imagen_desde_url(api_url,nombre_archivo_destino)
+        img = Image.open(nombre_archivo_destino)
+        img.show()
+
+
+def guardar_imagen_desde_url(url, nombre_archivo):
+    """
+    Descarga una imagen desde una URL y la guarda en un archivo.
+    """
+    try:
+        response = requests.get(url, stream=True)
+        response.raise_for_status()  # Lanza excepción si hay error HTTP (4xx o 5xx)
+
+        content_type = response.headers.get('Content-Type')
+        extension = '.png'  # Valor por defecto
+
+        if content_type:
+            if 'image/png' in content_type:
+                extension = '.png'
+            elif 'image/jpeg' in content_type:
+                extension = '.jpg'
+            elif 'image/svg+xml' in content_type:
+                extension = '.svg'
+
+        nombre_archivo_final = f"{nombre_archivo}{extension}"
+
+        with open(nombre_archivo_final, 'wb') as file:
+            for chunk in response.iter_content(chunk_size=8192):
+                file.write(chunk)
+
+        print(f"Imagen guardada exitosamente como '{nombre_archivo_final}'")
+        return nombre_archivo_final
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error al hacer el request: {e}")
+    except IOError as e:
+        print(f"Error al escribir el archivo: {e}")
 
 main()
