@@ -95,24 +95,24 @@ def obtener_obras_por_nacionalidad(nacionalidad, obras):
     #si la respuesta es exitosa, devuelve el listado de id de obras
     if response.status_code == 200:
         data = response.json()["objectIDs"]
-        print(response.json())
+        #print(response.json())
 
         #crea y guarda los objetos
         for id in data:
-            print(id)
+            #print(id)
 
             #verifica si la obra ya existe en la lista
-            """existe = False
+            existe = False
             for obra in obras:
                 if obra.id == id:
                     existe = True
                     break
             
             #si no existe, obtiene la obra por su id y la agrega a la lista
-            if existe == False:"""
-            obra = obtener_obras_id(id)
-            if obra is not None:
-                obras.append(obra)
+            if existe == False:
+                obra = obtener_obras_id(id)
+                if obra is not None:
+                    obras.append(obra)
         return data
     return []
 

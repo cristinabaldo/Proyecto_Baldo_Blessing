@@ -15,7 +15,7 @@ def main():
         print("1. Ver lista de obras por Departamento")
         print("2. Ver lista de obras por Nacionalidad del autor")
         print("3. Ver lista de obras por nombre del autor")
-        print("3. Salir")
+        print("4. Salir")
 
         opcion = input("Ingrese una opcion: ")
 
