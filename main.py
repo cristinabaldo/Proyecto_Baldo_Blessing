@@ -3,7 +3,9 @@ from API import obtener_departamentos, obtener_obras, obtener_obras_por_artista,
 import requests
 from PIL import Image
 
+#funcion principal que inicia el programa
 def main():
+    #Obtiene los departamentos, obras y nacionalidades del Met Museum
     departamentos = obtener_departamentos()
     obras = []
     nacionalidades = []
@@ -34,7 +36,9 @@ def main():
         else:
             print("Opcion no valida, intente de nuevo")
 
+#Funcion para ver obras por departamento: Muestra los departamentos y permite al usuario seleccionar uno para ver las obras
 def ver_obras_por_departamento(departamentos, obras):
+    #muestra los departamentos
     for departamento in departamentos:
         print(f"ID: {departamento.id} - Departamento: {departamento.nombre}")
 
@@ -46,13 +50,14 @@ def ver_obras_por_departamento(departamentos, obras):
 
     id_departamento = int(id_departamento)
 
+    #obtiene las obras del departamento seleccionado
     var = obtener_obras_por_departamento(id_departamento, obras)
     print(f"Buscando obras...")
     
     if var == []:
         print("No sexisten obras para este departamento o el ID es incorrecto")
     else:
-
+        #muestra las obras del departamento
         contador = 1
         for obra in obras:
             for id in var:
@@ -67,7 +72,7 @@ def ver_obras_por_departamento(departamentos, obras):
             respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
         
         
-
+        #si el usuario quiere ver la imagen de una obra, pide el numero de la obra y la muestra
         if respuesta == "1":
             respuesta = input("Ingrese el numero de la obra: ")
             while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
@@ -83,8 +88,9 @@ def ver_obras_por_departamento(departamentos, obras):
                             return
                         contador += 1
 
+#Funcion para ver obras por nacionalidad: Muestra las nacionalidades y permite al usuario seleccionar una para ver las obras
 def ver_obras_por_nacionalidad(nacionalidades, obras):
-
+    #muestra las nacionalidades
     for i, nacionalidad in enumerate(nacionalidades):
         print(f"{i+1}. {nacionalidad}.")
 
@@ -95,12 +101,15 @@ def ver_obras_por_nacionalidad(nacionalidades, obras):
 
     nacionalidad = nacionalidades[int(seleccion)-1]
     print(f"Buscando obras de nacionalidad {nacionalidad}...")
+
+    #busca las obras por nacionalidad
     data = obtener_obras_por_nacionalidad(nacionalidad, obras)
 
     if data == []:
         print("No sexisten obras con artistas de esta nacionalidad")
     else:
 
+        #muestra las obras de la nacionalidad seleccionada
         contador = 1
         for obra in obras:
             for id in data:
@@ -115,7 +124,7 @@ def ver_obras_por_nacionalidad(nacionalidades, obras):
             respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
         
         
-
+        #si el usuario quiere ver la imagen de una obra, pide el numero de la obra y la muestra
         if respuesta == "1":
             respuesta = input("Ingrese el numero de la obra: ")
             while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
@@ -131,8 +140,9 @@ def ver_obras_por_nacionalidad(nacionalidades, obras):
                             return
                         contador += 1
 
+#Funcion para ver obras por nombre del autor: Permite al usuario ingresar el nombre de un autor y muestra sus obras
 def ver_obras_por_nombre_autor(obras):
-    
+    #pide el nombre del autor
     nombre = input("Ingrese el nombre del autor: ")
     while not nombre:
         print("Nombre invalido, intente de nuevo")
@@ -140,12 +150,13 @@ def ver_obras_por_nombre_autor(obras):
 
     print(f"Buscando obras de {nombre}...")
 
+    #busca las obras por nombre del autor
     data = obtener_obras_por_artista(nombre, obras)
  
     if data == []:
         print("No sexisten obras para este departamento o el ID es incorrecto")
     else:
-
+        #muestra las obras del autor
         contador = 1
         for obra in obras:
             for id in data:
@@ -160,7 +171,7 @@ def ver_obras_por_nombre_autor(obras):
             respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
         
         
-
+        #si el usuario quiere ver la imagen de una obra, pide el numero de la obra y la muestra
         if respuesta == "1":
             respuesta = input("Ingrese el numero de la obra: ")
             while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
@@ -176,6 +187,7 @@ def ver_obras_por_nombre_autor(obras):
                             return
                         contador += 1
 
+#Abre la imagen de una obra y la muestra
 def mostrar_imagen(obra):
 
     # URL de la API
@@ -193,6 +205,7 @@ def mostrar_imagen(obra):
         img = Image.open(nombre_archivo_destino)
         img.show()
 
+#Guarda una imagen desde una URL
 def guardar_imagen_desde_url(url, nombre_archivo):
     """
     Descarga una imagen desde una URL y la guarda en un archivo.

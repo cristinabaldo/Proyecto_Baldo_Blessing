@@ -4,16 +4,19 @@ from Departamento import Departamento
 from Obra import Obra
 import csv
 
+#CSV
 def obtener_nacionalidades(nacionalidades):
-
+    #Recorre el csv de nacionalidades y las agrega a la lista
     with open("CH_Nationality_List_20171130_v1.csv", newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
+            #omite la primera fila que contiene el encabezado
             if row[0] != "Nationality":
                 nacionalidades.append(row[0])
 
+#Obtiene la lista de departamentos del Met Museum
 def obtener_departamentos():
-    #Obtiene la lista de departamentos del Met Museum
+    
     api_url = "https://collectionapi.metmuseum.org/public/collection/v1/departments"
     response = requests.get(api_url)
 
@@ -28,8 +31,8 @@ def obtener_departamentos():
 
         return departamentos
 
+#Obtiene las obras de un departamento por su ID
 def obtener_obras_por_departamento(id_departamento, obras):
-    #Obtiene las obras de un departamento por su ID
     api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId={id_departamento}&q=*&hasImages=true"
     response = requests.get(api_url)
 
@@ -56,8 +59,8 @@ def obtener_obras_por_departamento(id_departamento, obras):
 
     return data
 
+#Obtiene la lista de obras del Met Museum
 def obtener_obras():
-    #Obtiene la lista de obras del Met Museum
     api_url = "https://collectionapi.metmuseum.org/public/collection/v1/objects"
     response = requests.get(api_url)
 
@@ -75,8 +78,8 @@ def obtener_obras():
         return obras
     return []
 
+#Obtiene los datos de una obra por su ID
 def obtener_obras_id(id):
-    #Obtiene los datos de una obra por su ID
     api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}"
     response = requests.get(api_url)
     
@@ -87,8 +90,10 @@ def obtener_obras_id(id):
         return obra
     return None
 
+
+
+#Obtiene las obras de un artista por su nacionalidad
 def obtener_obras_por_nacionalidad(nacionalidad, obras):
-    #Obtiene las obras de un artista por su nacionalidad
     api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nacionalidad.lower()}"
     response = requests.get(api_url)
 
@@ -116,6 +121,8 @@ def obtener_obras_por_nacionalidad(nacionalidad, obras):
         return data
     return []
 
+
+#Obtiene las obras de un artista por su nombre
 def obtener_obras_por_artista(nombre, obras):
 
     nombre_sin_espacio = nombre.replace(" ", "%20")
