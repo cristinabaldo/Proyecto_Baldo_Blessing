@@ -32,7 +32,7 @@ def obtener_departamentos():
         return departamentos
 
 #Obtiene las obras de un departamento por su ID
-def obtener_obras_por_departamento(id_departamento, obras):
+def obtener_obras_por_departamento(id_departamento, obras, departamentos):
     api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId={id_departamento}&q=*&hasImages=true"
     response = requests.get(api_url)
 
@@ -53,7 +53,7 @@ def obtener_obras_por_departamento(id_departamento, obras):
                 
                 #si no existe, obtiene la obra por su id y la agrega a la lista
                 if existe == False:
-                    obra = obtener_obras_id(id)
+                    obra = obtener_obras_id(id, departamentos)
                     if obra is not None:
                         obras.append(obra)
 
@@ -79,21 +79,28 @@ def obtener_obras():
     return []
 
 #Obtiene los datos de una obra por su ID
-def obtener_obras_id(id):
+def obtener_obras_id(id, departamentos):
     api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}"
     response = requests.get(api_url)
     
     #Si la respuesta es exitosa, devuelve el objeto obra
     if response.status_code == 200:
         obra_data = response.json()
-        obra = Obra(obra_data["objectID"], obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], obra_data["department"], obra_data["objectDate"], obra_data["primaryImageSmall"])
+
+        departamento_objeto=""
+        for departamento in departamentos:
+            if departamento.id == obra_data["department"]:
+                departamento_objeto = departamento
+                break
+
+        obra = Obra(obra_data["objectID"], obra_data["title"], obra_data["artistDisplayName"], obra_data["artistNationality"], obra_data["artistBeginDate"], obra_data["artistEndDate"], departamento_objeto, obra_data["objectDate"], obra_data["primaryImageSmall"])
         return obra
     return None
 
 
 
 #Obtiene las obras de un artista por su nacionalidad
-def obtener_obras_por_nacionalidad(nacionalidad, obras):
+def obtener_obras_por_nacionalidad(nacionalidad, obras, departamentos):
     api_url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nacionalidad.lower()}"
     response = requests.get(api_url)
 
@@ -115,7 +122,7 @@ def obtener_obras_por_nacionalidad(nacionalidad, obras):
             
             #si no existe, obtiene la obra por su id y la agrega a la lista
             if existe == False:
-                obra = obtener_obras_id(id)
+                obra = obtener_obras_id(id, departamentos)
                 if obra is not None:
                     obras.append(obra)
         return data
@@ -123,7 +130,7 @@ def obtener_obras_por_nacionalidad(nacionalidad, obras):
 
 
 #Obtiene las obras de un artista por su nombre
-def obtener_obras_por_artista(nombre, obras):
+def obtener_obras_por_artista(nombre, obras, departamentos):
 
     nombre_sin_espacio = nombre.replace(" ", "%20")
     nombre_en_minusculas = nombre_sin_espacio.lower()
@@ -149,7 +156,7 @@ def obtener_obras_por_artista(nombre, obras):
             
             #si no existe, obtiene la obra por su id y la agrega a la lista
             if existe == False:
-                obra = obtener_obras_id(id)
+                obra = obtener_obras_id(id, departamentos)
                 if obra is not None:
                     obras.append(obra)
         return data

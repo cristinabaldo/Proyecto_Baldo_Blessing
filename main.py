@@ -26,10 +26,10 @@ def main():
             ver_obras_por_departamento(departamentos, obras)
         elif opcion == "2":
             print("Ver lista de obras por Nacionalidad del autor")
-            ver_obras_por_nacionalidad(nacionalidades, obras)
+            ver_obras_por_nacionalidad(nacionalidades, obras, departamentos)
         elif opcion == "3":
             print("Ver lista de obras por nombre del autor")
-            ver_obras_por_nombre_autor(obras)
+            ver_obras_por_nombre_autor(obras, departamentos)
         elif opcion == "4":
             print("Salir")
             break
@@ -51,7 +51,7 @@ def ver_obras_por_departamento(departamentos, obras):
     id_departamento = int(id_departamento)
 
     #obtiene las obras del departamento seleccionado
-    var = obtener_obras_por_departamento(id_departamento, obras)
+    var = obtener_obras_por_departamento(id_departamento, obras, departamentos)
     print(f"Buscando obras...")
     
     if var == []:
@@ -89,7 +89,7 @@ def ver_obras_por_departamento(departamentos, obras):
                         contador += 1
 
 #Funcion para ver obras por nacionalidad: Muestra las nacionalidades y permite al usuario seleccionar una para ver las obras
-def ver_obras_por_nacionalidad(nacionalidades, obras):
+def ver_obras_por_nacionalidad(nacionalidades, obras, departamentos):
     #muestra las nacionalidades
     for i, nacionalidad in enumerate(nacionalidades):
         print(f"{i+1}. {nacionalidad}.")
@@ -103,7 +103,7 @@ def ver_obras_por_nacionalidad(nacionalidades, obras):
     print(f"Buscando obras de nacionalidad {nacionalidad}...")
 
     #busca las obras por nacionalidad
-    data = obtener_obras_por_nacionalidad(nacionalidad, obras)
+    data = obtener_obras_por_nacionalidad(nacionalidad, obras, departamentos)
 
     if data == []:
         print("No sexisten obras con artistas de esta nacionalidad")
@@ -141,7 +141,7 @@ def ver_obras_por_nacionalidad(nacionalidades, obras):
                         contador += 1
 
 #Funcion para ver obras por nombre del autor: Permite al usuario ingresar el nombre de un autor y muestra sus obras
-def ver_obras_por_nombre_autor(obras):
+def ver_obras_por_nombre_autor(obras, departamentos):
     #pide el nombre del autor
     nombre = input("Ingrese el nombre del autor: ")
     while not nombre:
@@ -151,7 +151,7 @@ def ver_obras_por_nombre_autor(obras):
     print(f"Buscando obras de {nombre}...")
 
     #busca las obras por nombre del autor
-    data = obtener_obras_por_artista(nombre, obras)
+    data = obtener_obras_por_artista(nombre, obras, departamentos)
  
     if data == []:
         print("No sexisten obras para este departamento o el ID es incorrecto")
