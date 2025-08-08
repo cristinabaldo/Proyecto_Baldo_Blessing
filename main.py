@@ -71,7 +71,7 @@ def ver_obras_por_departamento(departamentos, obras):
             while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
                 print("Numero invalido, intente de nuevo")
                 respuesta = input("Ingrese el numero de la obra: ")
-                
+
             contador = 1
             for obra in obras:
                 for id in var:
@@ -104,24 +104,40 @@ def ver_obras_por_nombre_autor(obras):
     print(f"Buscando obras de {nombre}...")
 
     data = obtener_obras_por_artista(nombre, obras)
+ 
+    if data == []:
+        print("No sexisten obras para este departamento o el ID es incorrecto")
+    else:
 
-
-    contador = 1
-    for id in data:
+        contador = 1
         for obra in obras:
-            if int(obra.id) == int(id):
-                print(f"{contador}.")
-                obra.show()
-                contador += 1
+            for id in data:
+                if obra.id == id:
+                    print(f"{contador}.")
+                    obra.show()
+                    contador += 1
 
-    respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
-    while respuesta not in ["1", "2"]:
-        print("Opcion invalida, intente de nuevo")
         respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
-    
+        while respuesta not in ["1", "2"]:
+            print("Opcion invalida, intente de nuevo")
+            respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+        
+        
 
-    if respuesta == "1":
-        pass
+        if respuesta == "1":
+            respuesta = input("Ingrese el numero de la obra: ")
+            while not respuesta.isnumeric() or not int(respuesta) in range(1, contador+1):
+                print("Numero invalido, intente de nuevo")
+                respuesta = input("Ingrese el numero de la obra: ")
+                
+            contador = 1
+            for obra in obras:
+                for id in data:
+                    if obra.id == id:
+                        if contador == int(respuesta):
+                            mostrar_imagen(obra)
+                            return
+                        contador += 1
 
 
 def mostrar_imagen(obra):
