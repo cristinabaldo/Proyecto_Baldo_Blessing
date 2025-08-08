@@ -43,9 +43,26 @@ def ver_obras_por_departamento(departamentos, obras):
 
     id_departamento = int(id_departamento)
 
+
+    
+
+    contador = 1
     for obra in obras:
         if obra.tipo == id_departamento:
-            pass
+            print(contador)
+            obra.show()
+            contador += 1
+
+    respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+    while respuesta not in ["1", "2"]:
+        print("Opcion invalida, intente de nuevo")
+        respuesta = input("Desea ver la imagen de alguna obra? 1. Si, 2. No: ")
+    
+
+    if respuesta == "1":
+        pass
+
+
 
 def ver_obras_por_nacionalidad(obras):
     nacionalidades = []
